@@ -18,6 +18,7 @@ public class A {
             }
 
             if (input.equals("list")) {
+                System.out.println("Here are the tasks in your list:");
                 for (int i = 0; i < count; i++) {
                     System.out.println((i + 1) + ". " + list[i]);
                 }
@@ -32,11 +33,28 @@ public class A {
                 list[index].unmark();
                 System.out.println("OK, I've marked this task as not done yet:\n" + list[index]);
                 continue;
+            } else if (input.startsWith("todo ")) {
+                list[count] = new Todo(input.substring(5));
+                System.out.println("Got it. I've added this task:");
+                System.out.println(" " + list[count]);
+                count++;
+                System.out.println("Now you have " + count + " tasks in the list.");
+            } else if (input.startsWith("deadline ")) {
+                String[] parts = input.substring(9).split(" /by ");
+                list[count] = new Deadline(parts[0], parts[1]);
+                System.out.println("Got it. I've added this task:");
+                System.out.println(" " + list[count]);
+                count++;
+                System.out.println("Now you have " + count + " tasks in the list.");
+            } else if (input.startsWith("event ")) {
+                String description = input.substring(6).split(" /from ")[0];
+                String[] time = input.substring(6).split(" /from ")[1].split(" /to ");
+                list[count] = new Event(description, time[0], time[1]);
+                System.out.println("Got it. I've added this task:");
+                System.out.println(" " + list[count]);
+                count++;
+                System.out.println("Now you have " + count + " tasks in the list.");
             }
-
-            System.out.println("added: " + input);
-            list[count] = new Task(input);
-            count++;
         }
 
         scanner.close();
