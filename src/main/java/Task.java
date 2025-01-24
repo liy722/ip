@@ -1,6 +1,12 @@
+
 class Task {
     String description;
     boolean isDone;
+    public enum TaskType {
+        TODO,
+        DEADLINE,
+        EVENT
+    }
 
     public Task(String description) {
         this.description = description;

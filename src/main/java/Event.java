@@ -2,6 +2,7 @@ public class Event extends Task {
 
     protected String from;
     protected String to;
+    protected TaskType type = TaskType.EVENT;
 
     public Event(String description, String from, String to) {
         super(description);
