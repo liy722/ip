@@ -9,7 +9,7 @@ public class A {
         System.out.println("Hello! I'm A");
         System.out.println("What can I do for you?\n");
 
-        while (true) {
+        while (scanner.hasNextLine()) {
             String input = scanner.nextLine();
 
             if (input.equals("bye")) {
@@ -20,7 +20,7 @@ public class A {
             if (input.equals("list")) {
                 System.out.println("Here are the tasks in your list:");
                 for (int i = 0; i < count; i++) {
-                    System.out.println((i + 1) + ". " + list[i]);
+                    System.out.println((i + 1) + "." + list[i]);
                 }
                 continue;
             } else if (input.startsWith("mark ")) {
