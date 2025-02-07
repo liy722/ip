@@ -4,7 +4,18 @@ import a.ui.*;
 import a.parser.*;
 import a.storage.*;
 import a.tasklist.*;
+
+/**
+ * The main entry point for the A chatbot application.
+ * It initializes the UI, storage, and task list, and then runs the command loop.
+ */
 public class A {
+    /**
+     * The main method that starts the Duke chatbot.
+     * It initializes UI, storage, and task management, then continuously processes user input.
+     *
+     * @param args Command-line arguments (not used in this application).
+     */
     public static void main(String[] args) {
         Ui ui = new Ui();
         Storage storage = new Storage("./data/duke.txt");

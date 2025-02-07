@@ -3,9 +3,21 @@ import a.duke_exception.*;
 import a.task.*;
 import a.ui.*;
 import a.tasklist.*;
+/**
+ * Handles parsing and executing user commands for task management.
+ */
+
 public class Parser {
 
 
+    /**
+     * Parses and executes the user command.
+     *
+     * @param input The user input command.
+     * @param ui The UI instance for displaying messages.
+     * @param list The TaskList instance containing tasks.
+     * @return {@code false} if the command is "bye" (to exit the program), otherwise {@code true}.
+     */
     public static boolean parse(String input, Ui ui, TaskList list) {
         try {
             if (input.equals("bye")) {

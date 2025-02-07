@@ -26,7 +26,13 @@ test {
         showStandardStreams = false
     }
 }
-
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'a.A'
+        )
+    }
+}
 application {
     mainClass.set("a.A")
 }

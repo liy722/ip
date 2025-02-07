@@ -22,8 +22,18 @@ public abstract class  Task {
         isDone = false;
     }
 
+    /**
+     * Converts the task to a savable string format for file storage.
+     *
+     * @return A formatted string representing the task.
+     */
     public abstract String toSaveFormat();
 
+    /**
+     * Returns a string representation of the task, including its status and description.
+     *
+     * @return A formatted string representation of the task.
+     */
     public String toString() {
         return (isDone ? "[X] " : "[ ] ") + description;
     }
