@@ -3,6 +3,12 @@ public class Deadline extends Task {
     protected String by;
     protected TaskType type = TaskType.DEADLINE;
 
+    @Override
+    public String toSaveFormat() {
+        return "D | " + (isDone ? "1" : "0") + " | " + description + " | " + by;
+    }
+
+
     public Deadline(String description, String by) {
         super(description);
         this.by = by;

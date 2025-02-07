@@ -1,5 +1,5 @@
 
-class Task {
+abstract class  Task {
     String description;
     boolean isDone;
     public enum TaskType {
@@ -20,6 +20,8 @@ class Task {
     public void unmark() {
         isDone = false;
     }
+
+    public abstract String toSaveFormat();
 
     public String toString() {
         return (isDone ? "[X] " : "[ ] ") + description;
