@@ -1,5 +1,6 @@
+package a.task;
 
-abstract class  Task {
+public abstract class  Task {
     String description;
     boolean isDone;
     public enum TaskType {

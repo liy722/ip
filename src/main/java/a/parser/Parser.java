@@ -1,3 +1,8 @@
+package a.parser;
+import a.duke_exception.*;
+import a.task.*;
+import a.ui.*;
+import a.tasklist.*;
 public class Parser {
 
 
@@ -13,9 +18,7 @@ public class Parser {
                     throw new DukeException("Your task list is empty.");
                 }
                 ui.showMessage("Here are the tasks in your list:");
-                for (int i = 0; i < list.size(); i++) {
-                    System.out.println((i + 1) + "." + list.get(i));
-                }
+                list.showTasks();
 
             } else if (input.startsWith("mark ")) {
                 int index = Integer.parseInt(input.substring(5)) - 1;

@@ -1,4 +1,6 @@
+package a.ui;
 import java.util.Scanner;
+
 public class Ui {
 
     private final Scanner scanner;
@@ -12,8 +14,7 @@ public class Ui {
         System.out.println("What can I do for you?\n");
     }
     public String read(){
-        String input = scanner.nextLine();
-        return input;
+        return scanner.nextLine();
     }
     public void showMessage(String message) {
         System.out.println(message);
