@@ -1,7 +1,6 @@
 package a.storage;
 import java.io.*;
 import java.util.ArrayList;
-
 import a.task.*;
 
 /**
@@ -50,6 +49,7 @@ public class Storage {
                 tasks.add(parseTask(line));
             }
         } catch (IOException ignored) {}
+
         return tasks;
     }
 
