@@ -7,8 +7,8 @@ import a.storage.*;
 
 public class TaskList {
     ArrayList<Task> list;
-    public TaskList(Storage storage) {
-        this.list = storage.load();
+    public TaskList(ArrayList<Task> list) {
+        this.list = list;
     }
     public int size(){
         return list.size();

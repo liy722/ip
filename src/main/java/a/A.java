@@ -8,7 +8,7 @@ public class A {
     public static void main(String[] args) {
         Ui ui = new Ui();
         Storage storage = new Storage("./data/duke.txt");
-        TaskList list = new TaskList(storage);
+        TaskList list = new TaskList(storage.load());
 
         ui.welcome();
 
