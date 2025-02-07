@@ -24,8 +24,20 @@ public class Parser {
                 ui.bye();
                 return false;
             }
-
-            if (input.equals("list")) {
+            if(input.startsWith("find ")) {
+                String keyword = input.substring(5);
+                ui.showMessage("Here are the matching tasks in your list:");
+                int count = 1;
+                for (Task task : list.getTasks()) {
+                    if (task.getDescription().contains(keyword)) {
+                        ui.showMessage(count + "." + task);
+                        count++;
+                    }
+                }
+                if (count == 1) {
+                    ui.showMessage("No matching tasks found.");
+                }
+            } else if (input.equals("list")) {
                 if (list.size() == 0) {
                     throw new DukeException("Your task list is empty.");
                 }
@@ -79,8 +91,10 @@ public class Parser {
                     ui.showMessage("Noted. I've removed this task:\n" + " " + removedTask);
                     ui.showMessage("Now you have " + list.size() + " tasks in the list.");
                 }
-
+            } else {
+                ui.showMessage("OOPS!!! I'm sorry, but I don't know what that means :-(");
             }
+
 
         } catch (DukeException e) {
             ui.showError(e.getMessage());
