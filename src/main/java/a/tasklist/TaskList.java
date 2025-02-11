@@ -8,7 +8,7 @@ import a.task.*;
  * Manages a list of tasks, including adding, removing, retrieving, and displaying tasks.
  */
 public class TaskList {
-    ArrayList<Task> list;
+    private ArrayList<Task> list;
     /**
      * Constructs a TaskList instance with an existing list of tasks.
      *
@@ -22,7 +22,7 @@ public class TaskList {
      *
      * @return The size of the task list.
      */
-    public int size(){
+    public int size() {
         return list.size();
     }
     /**
@@ -31,7 +31,7 @@ public class TaskList {
      * @param index The index of the task to retrieve (0-based).
      * @return The task at the given index.
      */
-    public Task get(int index){
+    public Task get(int index) {
         return list.get(index);
     }
     /**
@@ -40,7 +40,7 @@ public class TaskList {
      * @param task The task to be added.
      */
 
-    public void add(Task task){
+    public void add(Task task) {
         list.add(task);
     }
     /**
@@ -49,7 +49,7 @@ public class TaskList {
      * @param index The index of the task to remove (0-based).
      * @return The removed task.
      */
-    public Task remove(int index){
+    public Task remove(int index) {
         return list.remove(index);
     }
 

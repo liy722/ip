@@ -1,18 +1,34 @@
 package a.task;
 
-public abstract class  Task {
-    String description;
-    boolean isDone;
+/**
+ * class task
+ */
+public abstract class Task {
+    protected String description;
+    protected boolean isDone;
+
+    /**
+     *  task type
+     */
     public enum TaskType {
         TODO,
         DEADLINE,
         EVENT
     }
 
+    /**
+     *
+     * @param description
+     */
     public Task(String description) {
         this.description = description;
         this.isDone = false;
     }
+
+    /**
+     *
+     * @return description
+     */
 
     public String getDescription() {
         return description;

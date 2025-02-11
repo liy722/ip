@@ -1,6 +1,7 @@
 package a.storage;
 import java.io.*;
 import java.util.ArrayList;
+
 import a.task.*;
 
 /**
@@ -30,7 +31,9 @@ public class Storage {
         file.getParentFile().mkdirs();
         try {
             file.createNewFile();
-        } catch (IOException ignored) {}
+        } catch (IOException ignored) {
+            System.out.print("error");
+        }
     }
 
     /**
@@ -48,7 +51,9 @@ public class Storage {
             while ((line = br.readLine()) != null) {
                 tasks.add(parseTask(line));
             }
-        } catch (IOException ignored) {}
+        } catch (IOException ignored) {
+            System.out.print("error");
+        }
 
         return tasks;
     }
@@ -62,10 +67,10 @@ public class Storage {
     private Task parseTask(String line) {
         String[] parts = line.split(" \\| ");
         Task task = switch (parts[0]) {
-            case "T" -> new Todo(parts[2]);
-            case "D" -> new Deadline(parts[2], parts[3]);
-            case "E" -> new Event(parts[2], parts[3], parts[4]);
-            default -> null;
+        case "T" -> new Todo(parts[2]);
+        case "D" -> new Deadline(parts[2], parts[3]);
+        case "E" -> new Event(parts[2], parts[3], parts[4]);
+        default -> null;
         };
         if (task != null && parts[1].equals("1")) {
             task.markAsDone();
@@ -85,6 +90,8 @@ public class Storage {
                 bw.write(task.toSaveFormat());
                 bw.newLine();
             }
-        } catch (IOException ignored) {}
+        } catch (IOException ignored) {
+            System.out.print("error");
+        }
     }
 }

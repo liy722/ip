@@ -1,9 +1,10 @@
 package a;
 
-import a.ui.*;
-import a.parser.*;
-import a.storage.*;
-import a.tasklist.*;
+import a.parser.Parser;
+import a.storage.Storage;
+import a.tasklist.TaskList;
+import a.ui.Ui;
+
 
 /**
  * The main entry point for the A chatbot application.

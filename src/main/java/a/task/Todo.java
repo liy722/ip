@@ -1,6 +1,9 @@
 package a.task;
 
-public class Todo extends Task{
+/**
+ * task of type todo
+ */
+public class Todo extends Task {
     protected TaskType type = TaskType.TODO;
     public Todo(String description) {
         super(description);

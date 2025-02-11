@@ -1,8 +1,10 @@
 package a.parser;
-import a.duke_exception.*;
+
+import a.exception.DukeException;
 import a.task.*;
-import a.ui.*;
-import a.tasklist.*;
+import a.tasklist.TaskList;
+import a.ui.Ui;
+
 /**
  * Handles parsing and executing user commands for task management.
  */
@@ -24,7 +26,7 @@ public class Parser {
                 ui.bye();
                 return false;
             }
-            if(input.startsWith("find ")) {
+            if (input.startsWith("find ")) {
                 String keyword = input.substring(5);
                 ui.showMessage("Here are the matching tasks in your list:");
                 int count = 1;
