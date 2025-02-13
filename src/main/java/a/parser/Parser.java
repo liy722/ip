@@ -20,13 +20,12 @@ public class Parser {
      * @param list The TaskList instance containing tasks.
      * @return {@code false} if the command is "bye" (to exit the program), otherwise {@code true}.
      */
-    public static boolean parse(String input, Ui ui, TaskList list) {
+    public static void parse(String input, Ui ui, TaskList list) {
         try {
             if (input.equals("bye")) {
                 ui.bye();
-                return false;
             }
-            if (input.startsWith("find ")) {
+            else if (input.startsWith("find ")) {
                 String keyword = input.substring(5);
                 ui.showMessage("Here are the matching tasks in your list:");
                 int count = 1;
@@ -43,8 +42,12 @@ public class Parser {
                 if (list.size() == 0) {
                     throw new DukeException("Your task list is empty.");
                 }
-                ui.showMessage("Here are the tasks in your list:");
-                list.showTasks();
+                String s = "";
+                for (int i = 0; i < list.size(); i++) {
+                    s=s+(i + 1) + "." + list.get(i)+"\n";
+                }
+                ui.showMessage("Here are the tasks in your list:\n"+s);
+
 
             } else if (input.startsWith("mark ")) {
                 int index = Integer.parseInt(input.substring(5)) - 1;
@@ -68,30 +71,23 @@ public class Parser {
                     throw new DukeException("The description of a todo cannot be empty.");
                 }
                 list.add(new Todo(description));
-                ui.showMessage("Got it. I've added this task:");
-                ui.showMessage(" " + list.get(list.size() - 1));
-                ui.showMessage("Now you have " + list.size() + " tasks in the list.");
+                ui.showMessage("Got it. I've added this task:\n"+ " " + list.get(list.size() - 1)+"\n"+"Now you have " + list.size() + " tasks in the list.");
             } else if (input.startsWith("deadline ")) {
                 String[] parts = input.substring(9).split(" /by ");
                 list.add(new Deadline(parts[0], parts[1]));
-                ui.showMessage("Got it. I've added this task:");
-                ui.showMessage(" " + list.get(list.size() - 1));
-                ui.showMessage("Now you have " + list.size() + " tasks in the list.");
+                ui.showMessage("Got it. I've added this task:\n"+" " + list.get(list.size() - 1)+"\n"+"Now you have " + list.size() + " tasks in the list.");
             } else if (input.startsWith("event ")) {
                 String description = input.substring(6).split(" /from ")[0];
                 String[] time = input.substring(6).split(" /from ")[1].split(" /to ");
                 list.add(new Event(description, time[0], time[1]));
-                ui.showMessage("Got it. I've added this task:");
-                ui.showMessage(" " + list.get(list.size() - 1));
-                ui.showMessage("Now you have " + list.size() + " tasks in the list.");
+                ui.showMessage("Got it. I've added this task:\n"+" " + list.get(list.size() - 1)+"\n"+"Now you have " + list.size() + " tasks in the list.");
             } else if (input.startsWith("delete ")) {
                 int index = Integer.parseInt(input.substring(7)) - 1;
                 if (index < 0 || index >= list.size()) {
                     throw new DukeException("Task number out of range.");
                 } else {
                     Task removedTask = list.remove(index);
-                    ui.showMessage("Noted. I've removed this task:\n" + " " + removedTask);
-                    ui.showMessage("Now you have " + list.size() + " tasks in the list.");
+                    ui.showMessage("Noted. I've removed this task:\n" + " " + removedTask+"\n"+"Now you have " + list.size() + " tasks in the list.");
                 }
             } else {
                 ui.showMessage("OOPS!!! I'm sorry, but I don't know what that means :-(");
@@ -103,7 +99,7 @@ public class Parser {
         } catch (NumberFormatException e) {
             ui.showError("Please enter a valid number for marking tasks.");
         }
-        return true;
+
     }
 
 }

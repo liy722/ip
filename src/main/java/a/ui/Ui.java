@@ -1,5 +1,6 @@
 package a.ui;
 import java.util.Scanner;
+import java.util.function.Consumer;
 
 /**
  * Handles all user interactions with the chatbot.
@@ -7,37 +8,33 @@ import java.util.Scanner;
  */
 public class Ui {
 
-    private final Scanner scanner;
+    private Consumer<String> outputConsumer;
 
     /**
      * Constructs a new Ui instance and initializes the scanner.
      */
     public Ui() {
-        scanner = new Scanner(System.in);
+        this.outputConsumer = System.out::println;;
     }
 
+    public void setOutputConsumer(Consumer<String> outputConsumer) {
+        this.outputConsumer = outputConsumer;
+    }
     /**
      * Displays a welcome message to the user.
      */
     public void welcome() {
-        System.out.println("Hello! I'm A");
-        System.out.println("What can I do for you?\n");
+        outputConsumer.accept("Hello! I'm A");
+        outputConsumer.accept("What can I do for you?\n");
     }
-    /**
-     * Reads and returns user input from the console.
-     *
-     * @return The next line of user input.
-     */
-    public String read(){
-        return scanner.nextLine();
-    }
+
     /**
      * Displays a message to the user.
      *
      * @param message The message to be displayed.
      */
     public void showMessage(String message) {
-        System.out.println(message);
+        outputConsumer.accept(message);
     }
 
     /**
@@ -46,14 +43,13 @@ public class Ui {
      * @param errorMessage The error message to be displayed.
      */
     public void showError(String errorMessage) {
-        System.out.println("Error: " + errorMessage);
+        outputConsumer.accept("Error: " + errorMessage);
     }
 
     /**
      * Displays a goodbye message and closes the scanner.
      */
     public void bye() {
-        System.out.println("Bye. Hope to see you again soon!");
-        scanner.close();
+        outputConsumer.accept("Bye. Hope to see you again soon!");
     }
 }
