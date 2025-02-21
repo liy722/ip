@@ -1,5 +1,4 @@
 package a.ui;
-import java.util.Scanner;
 import java.util.function.Consumer;
 
 /**
