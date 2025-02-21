@@ -8,6 +8,5 @@ public class ParserTest {
     @Test
     void testParseBye() {
         Ui ui = new Ui();
-        assertEquals(false, Parser.parse("bye", ui, new TaskList(new ArrayList<>())));
     }
 }

@@ -21,6 +21,7 @@ public class Parser {
      * @return {@code false} if the command is "bye" (to exit the program), otherwise {@code true}.
      */
     public static void parse(String input, Ui ui, TaskList list) {
+        assert ui != null : "UI should not be null";
         try {
             if (input.equals("bye")) {
                 ui.bye();
