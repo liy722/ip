@@ -88,9 +88,24 @@ public class Parser {
                     throw new DukeException("Task number out of range.");
                 } else {
                     Task removedTask = list.remove(index);
-                    ui.showMessage("Noted. I've removed this task:\n" + " " + removedTask + "\n"+"Now you have " + list.size() + " tasks in the list.");
+                    ui.showMessage("Noted. I've removed this task:\n" + " " + removedTask + "\n" + "Now you have " + list.size() + " tasks in the list.");
                 }
-            } else {
+            } else if (input.startsWith("fixed ")) {
+                String[] parts = input.substring(6).split(" /for ");
+                if (parts.length < 2) {
+                    throw new DukeException("Please provide a valid description and duration.");
+                }
+                String description = parts[0];
+                int duration;
+                try {
+                    duration = Integer.parseInt(parts[1]);
+                } catch (NumberFormatException e) {
+                    throw new DukeException("Please enter a valid number for the duration.");
+                }
+                list.add(new FixedDurationTask(description, duration));
+                ui.showMessage("Got it. I've added this task:\n" + " " + list.get(list.size() - 1) + "\n" + "Now you have " + list.size() + " tasks in the list.");
+            }
+            else {
                 ui.showMessage("OOPS!!! I'm sorry, but I don't know what that means :-(");
             }
 
