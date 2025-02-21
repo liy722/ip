@@ -12,14 +12,29 @@ repositories {
 dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter:5.10.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10.0'
+
+    String javaFxVersion = '17.0.7'
+    def osName = System.getProperty("os.name").toLowerCase()
+
+    def osClassifier = ''
+    if (osName.contains('win')) {
+        osClassifier = 'win'
+    } else if (osName.contains('mac')) {
+        osClassifier = 'mac'
+    } else if (osName.contains('nux') || osName.contains('nix')) {
+        osClassifier = 'linux'
+    }
+
+    implementation group: 'org.openjfx', name: 'javafx-base', version: javaFxVersion, classifier: osClassifier
+    implementation group: 'org.openjfx', name: 'javafx-controls', version: javaFxVersion, classifier: osClassifier
+    implementation group: 'org.openjfx', name: 'javafx-fxml', version: javaFxVersion, classifier: osClassifier
+    implementation group: 'org.openjfx', name: 'javafx-graphics', version: javaFxVersion, classifier: osClassifier
 }
 
 test {
     useJUnitPlatform()
-
     testLogging {
         events "passed", "skipped", "failed"
-
         showExceptions true
         exceptionFormat "full"
         showCauses true
@@ -27,10 +42,11 @@ test {
         showStandardStreams = false
     }
 }
+
 jar {
     manifest {
         attributes(
-                'Main-Class': 'a.A'
+                'Main-Class': 'Launcher'
         )
     }
 }
@@ -39,33 +55,26 @@ application {
     mainClass.set("Launcher")
 }
 
-
 shadowJar {
     archiveBaseName = "a"
     archiveClassifier = null
+    manifest {
+        attributes(
+                'Main-Class': 'Launcher'
+        )
+    }
 }
 
-run{
+run {
     standardInput = System.in
+    jvmArgs = [
+            '-ea',
+            '--module-path', configurations.runtimeClasspath.asPath,
+            '--add-modules', 'javafx.controls,javafx.fxml'
+    ]
 }
 
 checkstyle {
     toolVersion = '10.2'
-}
-dependencies {
-    String javaFxVersion = '17.0.7'
-
-    implementation group: 'org.openjfx', name: 'javafx-base', version: javaFxVersion, classifier: 'win'
-    implementation group: 'org.openjfx', name: 'javafx-base', version: javaFxVersion, classifier: 'mac'
-    implementation group: 'org.openjfx', name: 'javafx-base', version: javaFxVersion, classifier: 'linux'
-    implementation group: 'org.openjfx', name: 'javafx-controls', version: javaFxVersion, classifier: 'win'
-    implementation group: 'org.openjfx', name: 'javafx-controls', version: javaFxVersion, classifier: 'mac'
-    implementation group: 'org.openjfx', name: 'javafx-controls', version: javaFxVersion, classifier: 'linux'
-    implementation group: 'org.openjfx', name: 'javafx-fxml', version: javaFxVersion, classifier: 'win'
-    implementation group: 'org.openjfx', name: 'javafx-fxml', version: javaFxVersion, classifier: 'mac'
-    implementation group: 'org.openjfx', name: 'javafx-fxml', version: javaFxVersion, classifier: 'linux'
-    implementation group: 'org.openjfx', name: 'javafx-graphics', version: javaFxVersion, classifier: 'win'
-    implementation group: 'org.openjfx', name: 'javafx-graphics', version: javaFxVersion, classifier: 'mac'
-    implementation group: 'org.openjfx', name: 'javafx-graphics', version: javaFxVersion, classifier: 'linux'
 }
 

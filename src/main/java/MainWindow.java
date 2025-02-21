@@ -7,7 +7,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 /**
- * 主 GUI 的控制器。
+ *
  */
 public class MainWindow extends AnchorPane {
     @FXML
