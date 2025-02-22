@@ -25,17 +25,19 @@ public class Parser {
         try {
             if (input.equals("bye")) {
                 ui.bye();
+                System.exit(0);
             }
             else if (input.startsWith("find ")) {
                 String keyword = input.substring(5);
-                ui.showMessage("Here are the matching tasks in your list:");
                 int count = 1;
+                String s = "Here are the matching tasks in your list:\n";
                 for (Task task : list.getTasks()) {
                     if (task.getDescription().contains(keyword)) {
-                        ui.showMessage(count + "." + task);
+                        s = s + count + "." + task + "\n";
                         count++;
                     }
                 }
+                ui.showMessage(s);
                 if (count == 1) {
                     ui.showMessage("No matching tasks found.");
                 }
