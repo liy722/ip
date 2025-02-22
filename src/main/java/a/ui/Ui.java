@@ -50,8 +50,7 @@ public class Ui {
      *
      * @return
      */
-    public short bye() {
+    public void bye() {
         outputConsumer.accept("Bye. Hope to see you again soon!");
-        return 0;
     }
 }
