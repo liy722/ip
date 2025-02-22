@@ -10,4 +10,3 @@ T | 1 | eat
 T | 0 | read
 T | 1 | list
 T | 0 | list
-F | 0 | read | 2

@@ -8,5 +8,8 @@ public class ParserTest {
     @Test
     void testParseBye() {
         Ui ui = new Ui();
+        TaskList list = new TaskList(new ArrayList<>());
+        Parser parser = new Parser();
+
     }
 }

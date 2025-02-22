@@ -1,6 +1,6 @@
 package a.parser;
 
-import a.exception.DukeException;
+import a.exception.AException;
 import a.task.*;
 import a.tasklist.TaskList;
 import a.ui.Ui;
@@ -41,7 +41,7 @@ public class Parser {
                 }
             } else if (input.equals("list")) {
                 if (list.size() == 0) {
-                    throw new DukeException("Your task list is empty.");
+                    throw new AException("Your task list is empty.");
                 }
                 String s = "";
                 for (int i = 0; i < list.size(); i++) {
@@ -53,7 +53,7 @@ public class Parser {
             } else if (input.startsWith("mark ")) {
                 int index = Integer.parseInt(input.substring(5)) - 1;
                 if (index < 0 || index >= list.size()) {
-                    throw new DukeException("Task number out of range.");
+                    throw new AException("Task number out of range.");
                 }
                 list.get(index).markAsDone();
                 ui.showMessage("Nice! I've marked this task as done:\n" + list.get(index));
@@ -61,7 +61,7 @@ public class Parser {
             } else if (input.startsWith("unmark ")) {
                 int index = Integer.parseInt(input.substring(7)) - 1;
                 if (index < 0 || index >= list.size()) {
-                    throw new DukeException("Task number out of range.");
+                    throw new AException("Task number out of range.");
                 }
                 list.get(index).unmark();
                 ui.showMessage("OK, I've marked this task as not done yet:\n" + list.get(index));
@@ -69,7 +69,7 @@ public class Parser {
             } else if (input.startsWith("todo ")) {
                 String description = input.substring(5);
                 if (description.isEmpty()) {
-                    throw new DukeException("The description of a todo cannot be empty.");
+                    throw new AException("The description of a todo cannot be empty.");
                 }
                 list.add(new Todo(description));
                 ui.showMessage("Got it. I've added this task:\n" + " " + list.get(list.size() - 1) + "\n" + "Now you have " + list.size() + " tasks in the list.");
@@ -85,7 +85,7 @@ public class Parser {
             } else if (input.startsWith("delete ")) {
                 int index = Integer.parseInt(input.substring(7)) - 1;
                 if (index < 0 || index >= list.size()) {
-                    throw new DukeException("Task number out of range.");
+                    throw new AException("Task number out of range.");
                 } else {
                     Task removedTask = list.remove(index);
                     ui.showMessage("Noted. I've removed this task:\n" + " " + removedTask + "\n" + "Now you have " + list.size() + " tasks in the list.");
@@ -93,14 +93,14 @@ public class Parser {
             } else if (input.startsWith("fixed ")) {
                 String[] parts = input.substring(6).split(" /for ");
                 if (parts.length < 2) {
-                    throw new DukeException("Please provide a valid description and duration.");
+                    throw new AException("Please provide a valid description and duration.");
                 }
                 String description = parts[0];
                 int duration;
                 try {
                     duration = Integer.parseInt(parts[1]);
                 } catch (NumberFormatException e) {
-                    throw new DukeException("Please enter a valid number for the duration.");
+                    throw new AException("Please enter a valid number for the duration.");
                 }
                 list.add(new FixedDurationTask(description, duration));
                 ui.showMessage("Got it. I've added this task:\n" + " " + list.get(list.size() - 1) + "\n" + "Now you have " + list.size() + " tasks in the list.");
@@ -110,7 +110,7 @@ public class Parser {
             }
 
 
-        } catch (DukeException e) {
+        } catch (AException e) {
             ui.showError(e.getMessage());
         } catch (NumberFormatException e) {
             ui.showError("Please enter a valid number for marking tasks.");

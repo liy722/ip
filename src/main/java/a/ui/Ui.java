@@ -47,8 +47,11 @@ public class Ui {
 
     /**
      * Displays a goodbye message and closes the scanner.
+     *
+     * @return
      */
-    public void bye() {
+    public short bye() {
         outputConsumer.accept("Bye. Hope to see you again soon!");
+        return 0;
     }
 }
