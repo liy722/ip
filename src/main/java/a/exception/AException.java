@@ -2,6 +2,7 @@ package a.exception;
 /**
  * Constructs a new AException with the specified detail message.
  */
+
 public class AException extends Exception {
     /**
      * Constructs a new AException with the specified detail message.
