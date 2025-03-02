@@ -9,46 +9,30 @@ repositories {
     mavenCentral()
 }
 
+String javaFxVersion = '17.0.7'
+
 dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter:5.10.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10.0'
 
-    String javaFxVersion = '17.0.7'
-    def osName = System.getProperty("os.name").toLowerCase()
 
-    def osClassifier = ''
-    if (osName.contains('win')) {
-        osClassifier = 'win'
-    } else if (osName.contains('mac')) {
-        osClassifier = 'mac'
-    } else if (osName.contains('nux') || osName.contains('nix')) {
-        osClassifier = 'linux'
-    }
+    implementation "org.openjfx:javafx-base:$javaFxVersion:win"
+    implementation "org.openjfx:javafx-controls:$javaFxVersion:win"
+    implementation "org.openjfx:javafx-fxml:$javaFxVersion:win"
+    implementation "org.openjfx:javafx-graphics:$javaFxVersion:win"
 
-    implementation group: 'org.openjfx', name: 'javafx-base', version: javaFxVersion, classifier: osClassifier
-    implementation group: 'org.openjfx', name: 'javafx-controls', version: javaFxVersion, classifier: osClassifier
-    implementation group: 'org.openjfx', name: 'javafx-fxml', version: javaFxVersion, classifier: osClassifier
-    implementation group: 'org.openjfx', name: 'javafx-graphics', version: javaFxVersion, classifier: osClassifier
-}
 
-test {
-    useJUnitPlatform()
-    testLogging {
-        events "passed", "skipped", "failed"
-        showExceptions true
-        exceptionFormat "full"
-        showCauses true
-        showStackTraces true
-        showStandardStreams = false
-    }
-}
+    implementation "org.openjfx:javafx-base:$javaFxVersion:linux"
+    implementation "org.openjfx:javafx-controls:$javaFxVersion:linux"
+    implementation "org.openjfx:javafx-fxml:$javaFxVersion:linux"
+    implementation "org.openjfx:javafx-graphics:$javaFxVersion:linux"
+    implementation "org.openjfx:javafx-media:$javaFxVersion:linux"
+    implementation "org.openjfx:javafx-web:$javaFxVersion:linux"
 
-jar {
-    manifest {
-        attributes(
-                'Main-Class': 'Launcher'
-        )
-    }
+    implementation "org.openjfx:javafx-base:$javaFxVersion:mac"
+    implementation "org.openjfx:javafx-controls:$javaFxVersion:mac"
+    implementation "org.openjfx:javafx-fxml:$javaFxVersion:mac"
+    implementation "org.openjfx:javafx-graphics:$javaFxVersion:mac"
 }
 
 application {
@@ -59,22 +43,25 @@ shadowJar {
     archiveBaseName = "a"
     archiveClassifier = null
     manifest {
-        attributes(
-                'Main-Class': 'Launcher'
-        )
+        attributes 'Main-Class': 'Launcher'
     }
+    mergeServiceFiles()
 }
 
 run {
     standardInput = System.in
-    jvmArgs = [
-            '-ea',
-            '--module-path', configurations.runtimeClasspath.asPath,
-            '--add-modules', 'javafx.controls,javafx.fxml'
-    ]
+    doFirst {
+        def currentOs = System.getProperty("os.name").toLowerCase()
+        def osSuffix = currentOs.contains('win') ? 'win' :
+                currentOs.contains('mac') ? 'mac' : 'linux'
+        def platformDeps = configurations.runtimeClasspath.filter { it.name.contains(osSuffix) }
+
+        if (!platformDeps.empty) {
+            jvmArgs += ['--module-path', platformDeps.asPath, '--add-modules', 'javafx.controls,javafx.fxml']
+        }
+    }
 }
 
 checkstyle {
-    toolVersion = '10.2'
+    toolVersion = '10.15.0'
 }
-
