@@ -75,16 +75,32 @@ public class Parser {
                 }
                 list.add(new Todo(description));
                 ui.showMessage("Got it. I've added this task:\n" + " " + list.get(list.size() - 1) + "\n" + "Now you have " + list.size() + " tasks in the list.");
-            } else if (input.startsWith("deadline ")) {
-                String[] parts = input.substring(9).split(" /by ");
+            }else if (input.startsWith("deadline ")) {
+
+                String[] parts = input.substring(9).split(" /by ", 2);
+                if (parts.length < 2) {
+                    throw new AException("Invalid format! Correct format: deadline <description> /by <YYYY-MM-DD>");
+                }
                 list.add(new Deadline(parts[0], parts[1]));
-                ui.showMessage("Got it. I've added this task:\n" + " " + list.get(list.size() - 1) +"\n" + "Now you have " + list.size() + " tasks in the list.");
+                ui.showMessage("Got it. I've added this task:\n" + " " + list.get(list.size() - 1) + "\n" + "Now you have " + list.size() + " tasks in the list.");
+
             } else if (input.startsWith("event ")) {
-                String description = input.substring(6).split(" /from ")[0];
-                String[] time = input.substring(6).split(" /from ")[1].split(" /to ");
+
+                String[] eventParts = input.substring(6).split(" /from ", 2);
+                if (eventParts.length < 2) {
+                    throw new AException("Invalid format! Correct format: event <description> /from <start time> /to <end time>");
+                }
+                String description = eventParts[0];
+                String[] time = eventParts[1].split(" /to ", 2);
+                if (time.length < 2) {
+                    throw new AException("Invalid format! Correct format: event <description> /from <start time> /to <end time>");
+                }
                 list.add(new Event(description, time[0], time[1]));
                 ui.showMessage("Got it. I've added this task:\n" + " " + list.get(list.size() - 1) + "\n" + "Now you have " + list.size() + " tasks in the list.");
-            } else if (input.startsWith("delete ")) {
+
+            }
+
+         else if (input.startsWith("delete ")) {
                 int index = Integer.parseInt(input.substring(7)) - 1;
                 if (index < 0 || index >= list.size()) {
                     throw new AException("Task number out of range.");
