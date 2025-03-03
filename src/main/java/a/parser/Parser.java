@@ -5,6 +5,11 @@ import a.task.*;
 import a.tasklist.TaskList;
 import a.ui.Ui;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
 /**
  * Handles parsing and executing user commands for task management.
  */
@@ -76,28 +81,35 @@ public class Parser {
                 list.add(new Todo(description));
                 ui.showMessage("Got it. I've added this task:\n" + " " + list.get(list.size() - 1) + "\n" + "Now you have " + list.size() + " tasks in the list.");
             }else if (input.startsWith("deadline ")) {
-
                 String[] parts = input.substring(9).split(" /by ", 2);
                 if (parts.length < 2) {
                     throw new AException("Invalid format! Correct format: deadline <description> /by <YYYY-MM-DD>");
                 }
-                list.add(new Deadline(parts[0], parts[1]));
-                ui.showMessage("Got it. I've added this task:\n" + " " + list.get(list.size() - 1) + "\n" + "Now you have " + list.size() + " tasks in the list.");
-
-            } else if (input.startsWith("event ")) {
-
+                try {
+                    LocalDate date = LocalDate.parse(parts[1]);
+                    list.add(new Deadline(parts[0], date.toString()));
+                    ui.showMessage("Got it. I've added this task:\n" + " " + list.get(list.size() - 1) + "\n" + "Now you have " + list.size() + " tasks in the list.");
+                } catch (DateTimeParseException e) {
+                    throw new AException("Invalid date format! Please use YYYY-MM-DD.");
+                }
+            }else if (input.startsWith("event ")) {
                 String[] eventParts = input.substring(6).split(" /from ", 2);
                 if (eventParts.length < 2) {
-                    throw new AException("Invalid format! Correct format: event <description> /from <start time> /to <end time>");
+                    throw new AException("Invalid format! Correct format: event <description> /from <start date> /to <end date>");
                 }
                 String description = eventParts[0];
                 String[] time = eventParts[1].split(" /to ", 2);
                 if (time.length < 2) {
-                    throw new AException("Invalid format! Correct format: event <description> /from <start time> /to <end time>");
+                    throw new AException("Invalid format! Correct format: event <description> /from <start date> /to <end date>");
                 }
-                list.add(new Event(description, time[0], time[1]));
-                ui.showMessage("Got it. I've added this task:\n" + " " + list.get(list.size() - 1) + "\n" + "Now you have " + list.size() + " tasks in the list.");
-
+                try {
+                    LocalDate start = LocalDate.parse(time[0]);
+                    LocalDate end = LocalDate.parse(time[1]);
+                    list.add(new Event(description, start.toString(), end.toString()));
+                    ui.showMessage("Got it. I've added this task:\n" + " " + list.get(list.size() - 1) + "\n" + "Now you have " + list.size() + " tasks in the list.");
+                } catch (DateTimeParseException e) {
+                    throw new AException("Invalid date format! Please use YYYY-MM-DD.");
+                }
             }
 
          else if (input.startsWith("delete ")) {
