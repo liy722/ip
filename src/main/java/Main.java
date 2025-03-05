@@ -10,7 +10,7 @@ import java.io.IOException;
 public class Main extends Application {
 
 
-    private A a = new A();
+    private final A a = new A();
 
     @Override
     public void start(Stage stage) {
