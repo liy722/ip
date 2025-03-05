@@ -80,7 +80,7 @@ public class Parser {
                 }
                 list.add(new Todo(description));
                 ui.showMessage("Got it. I've added this task:\n" + " " + list.get(list.size() - 1) + "\n" + "Now you have " + list.size() + " tasks in the list.");
-            }else if (input.startsWith("deadline ")) {
+            } else if (input.startsWith("deadline ")) {
                 String[] parts = input.substring(9).split(" /by ", 2);
                 if (parts.length < 2) {
                     throw new AException("Invalid format! Correct format: deadline <description> /by <YYYY-MM-DD>");
@@ -92,7 +92,7 @@ public class Parser {
                 } catch (DateTimeParseException e) {
                     throw new AException("Invalid date format! Please use YYYY-MM-DD.");
                 }
-            }else if (input.startsWith("event ")) {
+            } else if (input.startsWith("event ")) {
                 String[] eventParts = input.substring(6).split(" /from ", 2);
                 if (eventParts.length < 2) {
                     throw new AException("Invalid format! Correct format: event <description> /from <start date> /to <end date>");
@@ -110,9 +110,7 @@ public class Parser {
                 } catch (DateTimeParseException e) {
                     throw new AException("Invalid date format! Please use YYYY-MM-DD.");
                 }
-            }
-
-         else if (input.startsWith("delete ")) {
+            } else if (input.startsWith("delete ")) {
                 int index = Integer.parseInt(input.substring(7)) - 1;
                 if (index < 0 || index >= list.size()) {
                     throw new AException("Task number out of range.");
@@ -134,11 +132,9 @@ public class Parser {
                 }
                 list.add(new FixedDurationTask(description, duration));
                 ui.showMessage("Got it. I've added this task:\n" + " " + list.get(list.size() - 1) + "\n" + "Now you have " + list.size() + " tasks in the list.");
-            }
-            else {
+            } else {
                 ui.showMessage("OOPS!!! I'm sorry, but I don't know what that means :-(");
             }
-
 
         } catch (AException e) {
             ui.showError(e.getMessage());
