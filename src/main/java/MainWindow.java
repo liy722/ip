@@ -32,20 +32,15 @@ public class MainWindow extends AnchorPane {
 
     public void setDuke(A a) {
         this.a = a;
-        dialogContainer.getChildren().addAll(
-                DialogBox.getDukeDialog("Hello! I'm A\nWhat can I do for you?", dukeImage));
+        dialogContainer.getChildren().addAll(DialogBox.getDukeDialog("Hello! I'm A\nWhat can I do for you?", dukeImage));
     }
 
 
     @FXML
     private void handleUserInput() {
-        a.setOutputConsumer(message -> dialogContainer.getChildren().addAll(
-                DialogBox.getDukeDialog(message, dukeImage)
-        ));
+        a.setOutputConsumer(message -> dialogContainer.getChildren().addAll(DialogBox.getDukeDialog(message, dukeImage)));
         String input = userInput.getText();
-        dialogContainer.getChildren().addAll(
-                DialogBox.getUserDialog(input, userImage)
-        );
+        dialogContainer.getChildren().addAll(DialogBox.getUserDialog(input, userImage));
         a.handleInput(input);
         userInput.clear();
     }
